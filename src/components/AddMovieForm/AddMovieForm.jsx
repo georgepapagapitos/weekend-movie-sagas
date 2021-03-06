@@ -1,6 +1,35 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 function AddMovieForm() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ 
+      type: 'FETCH_GENRES'
+    });
+  }, []);
+
+  const genres = useSelector(store => store.genres)
+
+  console.log('genres', genres);
+
   return (
-    <h1>FORM</h1>
+    <>
+      <form>
+        <input type="text" placeholder="Enter movie title..." />
+        <input type="text" placeholder="Enter poster image URL..." />
+        <textarea rows="4" cols="50" placeholder="Enter movie description..." />
+        <select>
+          {genres.map(genre => {
+            return (
+              <option value={genre.id}>{genre.name}</option>
+            )
+          })}
+        </select>
+      </form>
+    </>
   )
 }
 
