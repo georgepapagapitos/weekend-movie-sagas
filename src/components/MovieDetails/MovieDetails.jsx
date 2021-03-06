@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
+import MovieList from "../MovieList/MovieList";
 
 function MovieDetails() {
 
   const dispatch = useDispatch();
-  const movieId = useParams(":id");
-  const movie = useSelector(store => store.details);
 
   useEffect(() => {
     dispatch({ 
@@ -14,6 +13,9 @@ function MovieDetails() {
       payload: movieId
     });
   }, []);
+  
+  const movieId = useParams(":id");
+  const movie = useSelector(store => store.details);
 
     return (
     <>
