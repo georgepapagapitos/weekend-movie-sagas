@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 function MovieDetails() {
 
@@ -20,6 +20,7 @@ function MovieDetails() {
       <h1>{movie.title}</h1>
       <img src={movie.poster} />
       <p>{movie.description}</p>
+      <Link to="/"><button type="button">BACK</button></Link>
     </>
   )
 }
