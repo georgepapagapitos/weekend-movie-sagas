@@ -54,7 +54,16 @@ function* fetchGenres() {
 }
 
 function* addMovie(action) {
-  console.log('in addMovie', action);
+  console.log('in addMovie', action.payload);
+  try {
+    yield axios.post('/api/movie', action.payload);
+    yield put({
+      type: 'FETCH_MOVIES'
+    })
+  }
+  catch(err) {
+    console.log('error in addMovie', err);
+  }
 }
 
 // Create sagaMiddleware

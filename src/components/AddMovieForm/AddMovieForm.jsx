@@ -28,7 +28,7 @@ function AddMovieForm() {
         title: movieTitle,
         poster: posterUrl,
         description: movieDescription,
-        genreId: selectedGenre
+        genre_id: selectedGenre
       };
       console.log('movieToAdd', movieToAdd);
       dispatch({
