@@ -30,16 +30,14 @@ function AddMovieForm() {
         description: movieDescription,
         genre_id: selectedGenre
       };
-      console.log('movieToAdd', movieToAdd);
       dispatch({
         type: 'ADD_MOVIE',
         payload: movieToAdd
-      })
-
+      });
       history.push('/');
     } else {
       alert('Please complete the form.');
-    }    
+    }
   }
 
   return (

@@ -31,11 +31,9 @@ function* fetchAllMovies() {
 }
 
 function* fetchDetails(action) {
-  console.log('in fetchDetails', action.payload.id);
   const movieId = action.payload.id;
   try {
     const movie = yield axios.get(`/api/movie/${movieId}`);
-    console.log('movie description:', movie.data);
     yield put({ type: 'SET_DETAILS', payload: movie.data });
   }
   catch(err) {
@@ -54,7 +52,6 @@ function* fetchGenres() {
 }
 
 function* addMovie(action) {
-  console.log('in addMovie', action.payload);
   try {
     yield axios.post('/api/movie', action.payload);
     yield put({

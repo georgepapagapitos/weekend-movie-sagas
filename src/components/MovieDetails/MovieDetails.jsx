@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-import MovieList from "../MovieList/MovieList";
 
 function MovieDetails() {
 
@@ -15,13 +14,13 @@ function MovieDetails() {
   }, []);
   
   const movieId = useParams(":id");
-  const movie = useSelector(store => store.details);
+  const movieDetails = useSelector(store => store.details);
 
     return (
     <>
-      <h1>{movie.title}</h1>
-      <img src={movie.poster} />
-      <p>{movie.description}</p>
+      <h1>{movieDetails.title}</h1>
+      <img src={movieDetails.poster} />
+      <p>{movieDetails.description}</p>
       <Link to="/"><button type="button">BACK</button></Link>
     </>
   )
