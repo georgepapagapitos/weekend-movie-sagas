@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
       WHERE movies.id=$1`;
       pool.query(genreQuery, [movieId])
         .then(genreResult => {
-          details = {...details, genres: genreResult.rows}
+          details = {...details, genres: genreResult.rows};
           console.log('details', details);
           res.send(details);
         })
