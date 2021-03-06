@@ -1,15 +1,12 @@
-import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 function MovieItem({ movie }) {
 
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleClick = (event) => {
     console.log('clicked!', event.target);
-    dispatch({
-      type: 'IMAGE_CLICK',
-      payload: movie.id
-    });
+    history.push(`/api/details/${movie.id}`);
   }
 
   return (
