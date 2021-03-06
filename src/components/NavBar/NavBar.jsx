@@ -7,9 +7,6 @@ function NavBar() {
       <Link to="/"><p>Home</p></Link>
       <Link to="/api/add"><p>Add Movie</p></Link>
     </nav>
-    <header>
-      <h1>The Movies Saga!</h1>
-    </header>
     </>
   )
 }
