@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router';
 
 function AddMovieForm() {
+
+  const genres = useSelector(store => store.genres)
 
   const [movieTitle, setMovieTitle] = useState('');
   const [posterUrl, setPosterUrl] = useState('');
@@ -9,6 +12,7 @@ function AddMovieForm() {
   const [selectedGenre, setSelectedGenre] = useState('');
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch({ 
@@ -16,18 +20,26 @@ function AddMovieForm() {
     });
   }, []);
 
-  const genres = useSelector(store => store.genres)
-
   const handleSubmit = () => {
     console.log('clicked submit');
-    const movieToAdd = {
-      title: movieTitle,
-      poster: posterUrl,
-      description: movieDescription,
-      genreId: selectedGenre
-    }
 
-    console.log('movieToAdd', movieToAdd);
+    if(movieTitle && posterUrl && movieDescription && selectedGenre) {
+      const movieToAdd = {
+        title: movieTitle,
+        poster: posterUrl,
+        description: movieDescription,
+        genreId: selectedGenre
+      };
+      console.log('movieToAdd', movieToAdd);
+      dispatch({
+        type: 'ADD_MOVIE',
+        payload: movieToAdd
+      })
+
+      history.push('/');
+    } else {
+      alert('Please complete the form.');
+    }    
   }
 
   return (
@@ -53,7 +65,8 @@ function AddMovieForm() {
           value={movieDescription}
           onChange={(event) => {setMovieDescription(event.target.value)}}
         />
-        <select value={selectedGenre} onChange={event => {setSelectedGenre(event.currentTarget.value)}}>
+        <select defaultValue="Choose a genre..." onChange={event => {setSelectedGenre(event.currentTarget.value)}}>
+          <option disabled>Choose a genre...</option>
           {genres.map(genre => {
             return (
               <option key={genre.id} value={genre.id}>{genre.name}</option>
@@ -61,7 +74,7 @@ function AddMovieForm() {
           })}
         </select>
         <button type="button" onClick={handleSubmit}>SUBMIT</button>
-        <button type="button">CANCEL</button>
+        <button type="button" onClick={() => history.push('/')}>CANCEL</button>
       </form>
     </>
   )
