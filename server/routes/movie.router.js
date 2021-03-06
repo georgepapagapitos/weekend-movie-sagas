@@ -30,7 +30,6 @@ router.get('/:id', (req, res) => {
       pool.query(genreQuery, [movieId])
         .then(genreResult => {
           details = {...details, genres: genreResult.rows};
-          console.log('details', details);
           res.send(details);
         })
         .catch(err => {

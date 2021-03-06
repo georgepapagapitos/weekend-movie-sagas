@@ -54,9 +54,7 @@ function* fetchGenres() {
 function* addMovie(action) {
   try {
     yield axios.post('/api/movie', action.payload);
-    yield put({
-      type: 'FETCH_MOVIES'
-    })
+    yield put({ type: 'FETCH_MOVIES' });
   }
   catch(err) {
     console.log('error in addMovie', err);
@@ -89,7 +87,10 @@ const genres = (state = [], action) => {
 const details = (state = {}, action) => {
   switch (action.type) {
     case 'SET_DETAILS':
+      console.log('action.payload', action.payload)
       return action.payload;
+    case 'CLEAR_DETAILS':
+      return {};
     default:
       return state;
   }
