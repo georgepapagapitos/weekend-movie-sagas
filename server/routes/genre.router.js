@@ -4,7 +4,7 @@ const pool = require('../modules/pool')
 
 router.get('/', (req, res) => {
   // Add query to get all genres
-  const query = 'SELECT name FROM genres'
+  const query = 'SELECT * FROM genres'
   pool.query(query)
     .then(results => {
       res.send(results.rows);

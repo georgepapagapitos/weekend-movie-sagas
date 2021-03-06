@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import GenreDropdownItem from '../GenreDropdownItem/GenreDropdownItem';
+
 function AddMovieForm() {
 
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ function AddMovieForm() {
         <select>
           {genres.map(genre => {
             return (
-              <option value={genre.id}>{genre.name}</option>
+              <GenreDropdownItem key={genre.id} genre={genre}/>
             )
           })}
         </select>
