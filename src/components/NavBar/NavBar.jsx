@@ -5,7 +5,7 @@ function NavBar() {
     <>
     <nav>
       <Link to="/"><p>Home</p></Link>
-      <Link to="/api/add"><p>Add Movie</p></Link>
+      <Link to="/add"><p>Add Movie</p></Link>
     </nav>
     </>
   )

@@ -3,8 +3,12 @@ const router = express.Router();
 const pool = require('../modules/pool')
 
 router.get('/', (req, res) => {
-
-  const query = `SELECT * FROM movies ORDER BY "title" ASC`;
+  const query = `SELECT "movies".id, "movies".title, "movies".description, "movies".poster,
+  JSON_AGG (name) "genres" FROM "movies"
+  JOIN "movies_genres" ON "movies".id = "movies_genres".movie_id
+  JOIN "genres" ON "movies_genres".genre_id = "genres".id
+  GROUP BY "movies".id, "movies".title, "movies".description, "movies".poster
+  ORDER BY "movies".title ASC;`;
   pool.query(query)
     .then( result => {
       res.send(result.rows);
@@ -13,26 +17,7 @@ router.get('/', (req, res) => {
       console.log('ERROR: Get all movies', err);
       res.sendStatus(500)
     })
-
 });
-
-router.get('/:id', (req, res) => {
-  const movieId = req.params.id;
-  console.log('grabbing details of movieId:', req.params);
-  const query = `SELECT movies.id, movies.title, movies.description, movies.poster,
-  JSON_AGG (name) genres FROM movies
-  JOIN movies_genres ON movies.id = movies_genres.movie_id
-  JOIN genres ON movies_genres.genre_id = genres.id 
-  WHERE movies.id=$1 GROUP BY movies.id;`;
-  pool.query(query, [movieId])
-    .then(result => {
-      res.send(result.rows[0]);
-    })
-    .catch(err => {
-      console.log('ERROR: Get movie details', err);
-      res.sendStatus(500);
-    })
-})
 
 router.post('/', (req, res) => {
   console.log(req.body);
