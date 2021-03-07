@@ -6,7 +6,7 @@ import './AddMovieForm.css';
 
 function AddMovieForm() {
 
-  const genres = useSelector(store => store.genres)
+  const genres = useSelector(store => store.genres);
 
   const [movieTitle, setMovieTitle] = useState('');
   const [posterUrl, setPosterUrl] = useState('');

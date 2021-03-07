@@ -79,11 +79,28 @@ const genres = (state = [], action) => {
   }
 }
 
+const editMovie = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_EDIT_MOVIE':
+      return action.payload;
+    case 'EDIT_ONCHANGE':
+      return {
+        ...state,
+        [action.payload.property]: action.payload.value
+      };
+    case 'EDIT_CLEAR': 
+      return {};
+    default:
+      return state;
+  }
+}
+
 // Create one store that all components can use
-const storeInstance = createStore(
+const store = createStore(
     combineReducers({
         movies,
-        genres
+        genres,
+        editMovie
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
@@ -94,7 +111,7 @@ sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <React.StrictMode>
-        <Provider store={storeInstance}>
+        <Provider store={store}>
         <App />
         </Provider>
     </React.StrictMode>,
