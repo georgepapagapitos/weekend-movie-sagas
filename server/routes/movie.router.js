@@ -18,23 +18,15 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const movieId = req.params.id;
-  console.log('grabbing details of movieId:', movieId);
-  const query = `SELECT * FROM movies WHERE movies.id=$1`;
+  console.log('grabbing details of movieId:', req.params);
+  const query = `SELECT movies.id, movies.title, movies.description, movies.poster,
+  JSON_AGG (name) genres FROM movies
+  JOIN movies_genres ON movies.id = movies_genres.movie_id
+  JOIN genres ON movies_genres.genre_id = genres.id 
+  WHERE movies.id=$1 GROUP BY movies.id;`;
   pool.query(query, [movieId])
     .then(result => {
-      let details = result.rows[0];
-      const genreQuery = `SELECT genres.name FROM genres JOIN
-      movies_genres ON genres.id=movies_genres.genre_id JOIN
-      movies ON movies_genres.movie_id=movies.id
-      WHERE movies.id=$1`;
-      pool.query(genreQuery, [movieId])
-        .then(genreResult => {
-          details = {...details, genres: genreResult.rows};
-          res.send(details);
-        })
-        .catch(err => {
-          console.log('error', err);
-        })
+      res.send(result.rows[0]);
     })
     .catch(err => {
       console.log('ERROR: Get movie details', err);

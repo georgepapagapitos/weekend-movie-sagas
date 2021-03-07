@@ -3,8 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 
+import MovieDetailGenre from '../MovieDetailGenre/MovieDetailGenre';
+
 function MovieDetails() {
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const movieId = useParams(":id");
+  
   useEffect(() => {
     dispatch({ 
       type: 'FETCH_DETAILS',
@@ -12,11 +18,8 @@ function MovieDetails() {
     });
   }, []);
 
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const movieId = useParams(":id");
   const movieDetails = useSelector(store => store.details);
-  console.log('movie genres in MovieDetails', movieDetails.genres);
+  console.log('details', movieDetails);
 
   const handleClick = () => {
     dispatch({

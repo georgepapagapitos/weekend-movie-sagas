@@ -6,12 +6,14 @@ import './MovieList.css'
 
 function MovieList() {
 
-    const dispatch = useDispatch();
-    const movies = useSelector(store => store.movies);
+  const dispatch = useDispatch();
+  const movies = useSelector(store => store.movies);
 
-    useEffect(() => {
-        dispatch({ type: 'FETCH_MOVIES' });
-    }, []);
+  useEffect(() => {
+    dispatch({ 
+      type: 'FETCH_MOVIES' 
+    });
+  }, []);
 
     return (
         <main>
