@@ -8,22 +8,22 @@ import AddMovieForm from '../AddMovieForm/AddMovieForm';
 function App() {
   return (
     <div className="App">
-      
-      
       <Router>
         <NavBar />      
-        <Route path="/" exact>
+        <Route exact path="/">
           <MovieList />
         </Route>
         
         {/* Details page */}
-        <Route path="/api/details/:id">
+        <Route exact path="/details/:id">
           <MovieDetails />
         </Route>
+        
         {/* Add Movie page */}
-        <Route path="/api/add">
+        <Route exact path="/add">
           <AddMovieForm />
         </Route>
+
       </Router>
     </div>
   );

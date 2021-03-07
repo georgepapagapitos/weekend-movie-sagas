@@ -27,3 +27,13 @@ nav {
   background-color: coral;
   padding: 1rem;
 }
+
+.movie-poster {
+  width: 150px;
+  height: 250px;
+}
+
+.movie-card {
+  width:200px;
+  height: 300px;
+}

@@ -1,26 +1,42 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 function MovieDetails() {
 
   const dispatch = useDispatch();
-  const movieId = useParams(":id");
-  const movie = useSelector(store => store.details);
-
+  const history = useHistory();
+  const movieIdParams = useParams(':id');
+  console.log('movieId', movieIdParams.id);
+  
   useEffect(() => {
     dispatch({ 
-      type: 'FETCH_DETAILS',
-      payload: movieId
+      type: 'SELECT_MOVIE',
+      payload: movieIdParams.id
     });
   }, []);
 
-    return (
+  const movieDetails = useSelector(store => store.movies[0]);
+  console.log('movieDetails', movieDetails);
+
+  const handleClick = () => {
+    history.push('/');
+  }
+  
+  return (
     <>
-      <h1>{movie.title}</h1>
-      <img src={movie.poster} />
-      <p>{movie.description}</p>
-      <Link to="/"><button type="button">BACK</button></Link>
+      <h1>{movieDetails.title}</h1>
+      <img src={movieDetails.poster} />
+      <ul>
+        {movieDetails.genres.map(genre => {
+          return (
+            <li key={genre}>{genre}</li>
+          )
+        })}
+      </ul>
+      <p>{movieDetails.description}</p>
+      <button type="button" onClick={handleClick}>BACK</button>
     </>
   )
 }
