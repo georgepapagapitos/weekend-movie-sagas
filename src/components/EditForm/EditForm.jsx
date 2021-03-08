@@ -5,16 +5,10 @@ import axios from 'axios';
 
 function EditForm() {
 
-  const genres = useSelector(store => store.genres);
-
-  const [movieTitle, setMovieTitle] = useState('');
-  const [posterUrl, setPosterUrl] = useState('');
-  const [movieDescription, setMovieDescription] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState('');
-
-  const movieId = useParams(':id');
-
   useEffect(() => {
+    dispatch({
+      type: 'FETCH_GENRES'
+    })
     dispatch({ 
       type: 'SELECT_MOVIE',
       payload: movieId
@@ -24,29 +18,42 @@ function EditForm() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const editMovie = useSelector((store) => store.editMovie);
-  console.log('edit movie', editMovie);
-  
+  const genres = useSelector(store => store.genres);
+  const movieToEdit = useSelector((store) => store.movies);
+
+  const [movieTitle, setMovieTitle] = useState('');
+  const [posterUrl, setPosterUrl] = useState('');
+  const [movieDescription, setMovieDescription] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState([]);
+
+  const movieId = useParams(':id');
+
   return (
     <>
       <h1>Edit Movie</h1>
-      <h2>{editMovie.title}</h2>
-      <img src={editMovie.poster}/>
+      <h2>{movieToEdit.title}</h2>
+      <img src={movieToEdit.poster}/>
       <form>
         <input 
           type="text"
           placeholder="Enter movie title..."
+          value={movieTitle}
+          onChange={(event) => {setMovieTitle(event.target.value)}}
         />
         <input
           type="text"
           placeholder="Enter poster image URL..."
+          value={posterUrl}
+          onChange={(event) => {setPosterUrl(event.target.value)}}
         />
         <textarea 
           rows="4"
           cols="50"
           placeholder="Enter movie description..."
+          value={movieDescription}
+          onChange={(event) => {setMovieDescription(event.target.value)}}
         />
-        <select defaultValue="Choose a genre..." onChange={event => {setSelectedGenre(event.currentTarget.value)}}>
+        <select defaultValue="Choose a genre..." onChange={event => {setSelectedGenre(event.currentTarge.value)}}>
           <option disabled>Choose a genre...</option>
           {genres.map(genre => {
             return (

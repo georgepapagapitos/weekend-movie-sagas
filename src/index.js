@@ -52,6 +52,10 @@ function* addMovie(action) {
   }
 }
 
+function editMovie(action) {
+  console.log('editMovie', action);
+}
+
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -61,8 +65,6 @@ const movies = (state = [], action) => {
     case 'SET_MOVIES':
       return action.payload;
     case 'SELECT_MOVIE':
-      console.log('select movie', state)
-      console.log('id to compare', action.payload)
       return state.filter(movie => movie.id == action.payload);
     default:
       return state;
@@ -79,28 +81,11 @@ const genres = (state = [], action) => {
   }
 }
 
-const editMovie = (state = {}, action) => {
-  switch (action.type) {
-    case 'SET_EDIT_MOVIE':
-      return action.payload;
-    case 'EDIT_ONCHANGE':
-      return {
-        ...state,
-        [action.payload.property]: action.payload.value
-      };
-    case 'EDIT_CLEAR': 
-      return {};
-    default:
-      return state;
-  }
-}
-
 // Create one store that all components can use
 const store = createStore(
     combineReducers({
         movies,
         genres,
-        editMovie
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

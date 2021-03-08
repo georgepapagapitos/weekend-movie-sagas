@@ -27,28 +27,30 @@ function MovieDetails() {
   }
 
   const handleEdit = () => {
-    dispatch({
-      type: 'SET_EDIT_MOVIE',
-      payload: movieDetails
-    })
     history.push(`/edit/${movieDetails.id}`);
   }
   
   return (
-    <>
-      <h1>{movieDetails.title}</h1>
-      <img src={movieDetails.poster} />
-      <ul>
-        {movieDetails.genres.map(genre => {
-          return (
-            <li key={genre}>{genre}</li>
-          )
-        })}
-      </ul>
-      <p>{movieDetails.description}</p>
-      <button type="button" onClick={handleClick}>BACK</button>
-      <button type="button" onClick={handleEdit}>EDIT</button>
-    </>
+    <div className="float-container">
+      <div className='float-child'>
+          <h1>{movieDetails.title}</h1>
+          <img src={movieDetails.poster} />
+          <ul>
+            {movieDetails.genres.map(genre => {
+              return (
+                <li key={genre}>{genre}</li>
+              )
+            })}
+          </ul>
+        </div>
+        <div className="float-child">
+          <p>{movieDetails.description}</p>
+        </div>
+        <div className="buttons">
+          <button type="button" onClick={handleClick}>BACK</button>
+          <button type="button" onClick={handleEdit}>EDIT</button>
+        </div>
+    </div>
   )
 }
 
